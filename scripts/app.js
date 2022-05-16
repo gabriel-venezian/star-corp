@@ -7,10 +7,9 @@ myApp.controller("myController", function ($scope, $http) {
       chave: "",
     },
   };
-  // Pessoas
-  $scope.pessoas = [];
 
   $scope.getPessoas = function () {
+    $scope.pessoas = [];
     let endpoint = "Pessoas/GetAll";
 
     $http.get(`${URL}/${endpoint}`, HEADERS).then((resposta) => {
@@ -92,7 +91,7 @@ myApp.controller("myController", function ($scope, $http) {
           });
 
         alert("Pessoa cadastrada com sucesso.");
-        location.reload();
+        $scope.getPessoas();
       }
     } else {
       alert("Preencha todos os campos do formulário de dados pessoais.");
@@ -289,6 +288,7 @@ myApp.controller("myController", function ($scope, $http) {
     }
 
     alert("Registro alterado com sucesso");
+    $scope.getPessoas();
   };
 
   $scope.reiniciarScopeEnderecos = function () {
