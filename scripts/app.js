@@ -90,6 +90,9 @@ myApp.controller("myController", function ($scope, $http) {
               $scope.postEndereco();
             }
           });
+
+        alert("Pessoa cadastrada com sucesso.");
+        location.reload();
       }
     } else {
       alert("Preencha todos os campos do formulário de dados pessoais.");
@@ -197,14 +200,7 @@ myApp.controller("myController", function ($scope, $http) {
           uf: dadoEndereco["uf"],
         });
 
-        $http
-          .post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS)
-          .then((resposta) => {
-            if (resposta.status === 200) {
-              alert("Pessoa cadastrada com sucesso.");
-              location.reload();
-            }
-          });
+        $http.post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS);
       }
     });
   };
