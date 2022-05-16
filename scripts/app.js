@@ -90,8 +90,8 @@ myApp.controller("myController", function ($scope, $http) {
             }
           });
 
-        alert("Pessoa cadastrada com sucesso.");
-        $scope.getPessoas();
+        salvarModalNovaPessoa.disabled = "true";
+        atualizarPagina();
       }
     } else {
       alert("Preencha todos os campos do formulário de dados pessoais.");
@@ -286,9 +286,8 @@ myApp.controller("myController", function ($scope, $http) {
         $http.post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS);
       }
     }
-
-    alert("Registro alterado com sucesso");
-    $scope.getPessoas();
+    modalEditarPessoaSalvar.disabled = true;
+    atualizarPagina();
   };
 
   $scope.reiniciarScopeEnderecos = function () {
@@ -309,5 +308,16 @@ myApp.controller("myController", function ($scope, $http) {
     if (dia.length < 2) dia = "0" + dia;
 
     return [dia, mes, ano].join("/");
+  }
+
+  function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function atualizarPagina() {
+    for (let i = 0; i < 2; i++) {
+      await sleep(i * 1500);
+    }
+    location.reload();
   }
 });
