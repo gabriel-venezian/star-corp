@@ -1,0 +1,19 @@
+/* Remover arrows/spinners input type number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Inverter cores da table striped (bootstrap) */
+#enderecos.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: #ffffff;
+}
+
+#enderecos.table-striped > tbody > tr:nth-child(even) > td {
+  background-color: rgba(0, 0, 0, 0.05);
+}
