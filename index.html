@@ -26,7 +26,7 @@
     </div>
 
     <div class="table-responsive-xl">
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover" id="listarPessoas">
         <thead>
           <tr>
             <th scope="col">Nome</th>
@@ -96,7 +96,7 @@
                       <label class="form-label" for="nome">Nome</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="text" name="nome" id="nome" ng-model="novaPessoa.nome" required>
+                      <input class="form-control" type="text" name="nome" id="nome" ng-model="novaPessoa.nome">
                     </div>
                   </div>
 
@@ -105,7 +105,7 @@
                       <label class="form-label" for="email">Email</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="email" name="email" id="email" placeholder="seu-email@email.com" ng-model="novaPessoa.email" required>
+                      <input class="form-control" type="email" name="email" id="email" placeholder="seu-email@email.com" ng-model="novaPessoa.email">
                     </div>
                   </div>
 
@@ -114,7 +114,7 @@
                       <label class="form-label" for="telefone">Telefone</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="text" name="telefone" id="telefone" ng-model="novaPessoa.telefone" required>
+                      <input class="form-control" type="text" name="telefone" id="telefone" ng-model="novaPessoa.telefone">
                     </div>
                   </div>
                 </div>
@@ -125,7 +125,7 @@
                       <label class="form-label" for="idade">Idade</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="text" name="idade" id="idade" ng-model="novaPessoa.idade" required>
+                      <input class="form-control" type="text" name="idade" id="idade" ng-model="novaPessoa.idade">
                     </div>
                   </div>
 
@@ -134,7 +134,7 @@
                       <label class="form-label" for="dataNascimento">Nascimento</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="date" name="dataNascimento" id="dataNascimento" ng-model="novaPessoa.dataNascimento" required>
+                      <input class="form-control" type="date" min="1900-01-01" max="3000-12-31" name="dataNascimento" id="dataNascimento" ng-model="novaPessoa.dataNascimento">
                     </div>
                   </div>
 
@@ -143,7 +143,7 @@
                       <label class="form-label" for="celular">Celular</label>
                     </div>
                     <div class="col-lg-8 col-sm-auto">
-                      <input class="form-control" type="text" name="celular" id="celular" ng-model="novaPessoa.celular" required>
+                      <input class="form-control" type="text" name="celular" id="celular" ng-model="novaPessoa.celular">
                     </div>
                   </div>
                 </div>
@@ -425,7 +425,7 @@
 
               <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voltar</button>
-                <button type="button" class="btn btn-primary" ng-click="editarPessoa()">Salvar</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="editarPessoa()">Salvar</button>
               </div>
             </fieldset>
           </form>

@@ -33,28 +33,67 @@ myApp.controller("myController", function ($scope, $http) {
     });
   };
 
+  $scope.validarDadosPessoais = function ($scope) {
+    let pessoa = $scope;
+
+    let erros = [];
+
+    if (pessoa["nome"] === undefined) {
+      erros.push("Preencha o campo nome.");
+    }
+    if (pessoa["dataNascimento"] === undefined) {
+      erros.push("Preencha o campo data de nascimento corretamente.");
+    }
+    if (pessoa["idade"] === undefined || isNaN(Number(pessoa["idade"]))) {
+      erros.push("Preencha o campo idade corretamente.");
+    }
+    if (pessoa["email"] === undefined) {
+      erros.push("Preencha o campo email corretamente.");
+    }
+    if (pessoa["telefone"] === undefined) {
+      erros.push("Preencha o campo telefone.");
+    }
+    if (pessoa["celular"] === undefined) {
+      erros.push("Preencha o campo celular.");
+    }
+
+    if (erros.length > 0) {
+      alert(erros.join("\n"));
+    }
+
+    return erros;
+  };
+
   // POST pessoa
   $scope.postPessoa = function () {
     let pessoa = $scope.novaPessoa;
 
-    let dadosParaEnvio = JSON.stringify({
-      nome: pessoa["nome"],
-      dataNascimento: pessoa["dataNascimento"],
-      idade: Number(pessoa["idade"]),
-      email: pessoa["email"],
-      telefone: pessoa["telefone"],
-      celular: pessoa["celular"],
-    });
+    if ($scope.novaPessoa !== undefined) {
+      let erros = $scope.validarDadosPessoais($scope.novaPessoa);
 
-    endpoint = "Pessoas/";
+      if (erros.length === 0) {
+        let dadosParaEnvio = JSON.stringify({
+          nome: pessoa["nome"],
+          dataNascimento: pessoa["dataNascimento"],
+          idade: Number(pessoa["idade"]),
+          email: pessoa["email"],
+          telefone: pessoa["telefone"],
+          celular: pessoa["celular"],
+        });
 
-    $http
-      .post(`${URL}/${endpoint}`, dadosParaEnvio, HEADERS)
-      .then((resposta) => {
-        if (resposta.status === 200) {
-          $scope.postEndereco();
-        }
-      });
+        endpoint = "Pessoas/";
+
+        $http
+          .post(`${URL}/${endpoint}`, dadosParaEnvio, HEADERS)
+          .then((resposta) => {
+            if (resposta.status === 200) {
+              $scope.postEndereco();
+            }
+          });
+      }
+    } else {
+      alert("Preencha todos os campos do formulário de dados pessoais.");
+    }
   };
 
   // Selecionar inputs pessoa
@@ -100,6 +139,7 @@ myApp.controller("myController", function ($scope, $http) {
 
   // Endereços
   $scope.enderecos = [];
+  $scope.novoEnderecoAdicionado = [];
 
   // Salvar endereço
   $scope.salvarEndereco = function () {
@@ -109,9 +149,11 @@ myApp.controller("myController", function ($scope, $http) {
       endereco !== undefined &&
       endereco["logradouro"] !== undefined &&
       endereco["numero"] !== undefined &&
+      !isNaN(Number(endereco["numero"])) &&
       endereco["bairro"] !== undefined &&
       endereco["cidade"] !== undefined &&
-      endereco["uf"] !== undefined
+      endereco["uf"] !== undefined &&
+      endereco["uf"].length <= 2
     ) {
       let cidadeUf = endereco["cidade"] + " - " + endereco["uf"];
 
@@ -124,7 +166,6 @@ myApp.controller("myController", function ($scope, $http) {
         cidadeUf: cidadeUf,
       };
 
-      $scope.novoEnderecoAdicionado = [];
       $scope.enderecos.push(dadosEndereco);
       $scope.novoEnderecoAdicionado.push(dadosEndereco);
 
@@ -156,7 +197,14 @@ myApp.controller("myController", function ($scope, $http) {
           uf: dadoEndereco["uf"],
         });
 
-        $http.post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS);
+        $http
+          .post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS)
+          .then((resposta) => {
+            if (resposta.status === 200) {
+              alert("Pessoa cadastrada com sucesso.");
+              location.reload();
+            }
+          });
       }
     });
   };
@@ -178,8 +226,6 @@ myApp.controller("myController", function ($scope, $http) {
         $scope.deletarEndereco(endereco);
       }
     });
-
-    $scope.deletarEndereco();
   };
 
   // Deletar pessoa
@@ -245,12 +291,15 @@ myApp.controller("myController", function ($scope, $http) {
         $http.post(`${URL}/${endpoint}`, enderecoParaEnvio, HEADERS);
       }
     }
+
+    alert("Registro alterado com sucesso");
   };
 
   $scope.reiniciarScopeEnderecos = function () {
     $scope.enderecos = [];
     $scope.novoEndereco = [];
     $scope.novoEnderecoAdicionado = [];
+    $scope.novaPessoa = [];
   };
 
   // Formatar Data
